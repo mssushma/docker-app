@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          pytest --cov=. --cov-report=xml
+          PYTHONPATH=. pytest --cov=. --cov-report=xml
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master

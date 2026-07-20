@@ -4,7 +4,7 @@ Parameters:
   LatestAmiId:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
-    
+
 Resources:
 
   AssignmentSG:
@@ -26,9 +26,29 @@ Resources:
   AssignmentEC2:
     Type: AWS::EC2::Instance
     Properties:
+
       InstanceType: t2.micro
 
       ImageId: !Ref LatestAmiId
 
       SecurityGroupIds:
         - !Ref AssignmentSG
+
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+
+          sudo  update -y
+
+          sudo dnf install docker -y
+
+          sudo systemctl start docker
+          sudo systemctl enable docker
+
+          docker pull sushms95/flask-assignment:latest
+
+          docker run -d \
+          --name flask-app \
+          --restart always \
+          -p 5000:5000 \
+          sushms95/flask-assignment:latest

@@ -30,7 +30,7 @@ jobs:
           PYTHONPATH=. pytest \
           --cov=. \
           --cov-report=xml \
-          --cov-fail-under<=80
+          --cov-fail-under<80
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master

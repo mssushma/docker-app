@@ -13,7 +13,7 @@ def health():
 @app.route("/version")
 def version():
     return "1.0"
- 
+
 def calculate():
     return 10 + 20
 
